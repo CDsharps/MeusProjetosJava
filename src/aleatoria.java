@@ -4,15 +4,28 @@ public class aleatoria {
 
     public static void main(String[] args) {
 
-        int age = Integer.parseInt(JOptionPane.showInputDialog("Qual sua idade?"));
+        String name = enter("Qual é o seu nome?");
+        int age = Integer.parseInt(enter("E a sua idade?"));
 
         if (age >= 18) {
 
-            JOptionPane.showMessageDialog(null, "Você é maior de idade.");
+            write("Olá " + name + " você já é maior de idade.");
         } else {
 
-            JOptionPane.showMessageDialog(null, "Você é menor de idade.");
+            write("Olá " + name + " você ainda é menor de idade.");
         }
+
+    }
+
+    private static void write(String message) {
+
+        JOptionPane.showMessageDialog(null, message);
+
+    }
+
+    private static String enter(String message) {
+
+        return JOptionPane.showInputDialog(message);
 
     }
 }
