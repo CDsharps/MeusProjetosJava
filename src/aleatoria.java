@@ -13,5 +13,6 @@ public class aleatoria {
 
             JOptionPane.showMessageDialog(null, "Você é menor de idade.");
         }
+
     }
 }
