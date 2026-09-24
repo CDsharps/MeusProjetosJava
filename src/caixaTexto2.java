@@ -1,73 +1,95 @@
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
-import java.util.Random;
 
 public class caixaTexto2 {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		int rolls = errorInt("Digite quantas vezes deseja lançar o dado: ");
+    }
 
-		if (rolls == -1) {
-			return;
-		}
+    private static void fillVetor(String[] vetor, String message) {
 
-		Random random = new Random();
-		int[] count = new int[7];
+        for (int i = 0; i < vetor.length; i++) {
 
-		for (int i = 0; i < rolls; i++) {
+            vetor[i] = errorString(message);
+            if (vetor[i] == null) {
 
-			int roll = random.nextInt(1, 7);
-			count[roll]++;
-		}
+                return;
+            }
+        }
+    }
 
-		StringBuilder result = new StringBuilder("Resultado de " + rolls + " lançamentos:\n");
+    private static void write(String args) {
 
-		for (int number = 1; number <= 6; number++) {
+        JOptionPane.showMessageDialog(null, args);
 
-			result.append("Número " + number + " saiu " + count[number] + " vez(es)\n");
-		}
+    }
 
-		write(result.toString());
-	}
+    private static String enter(String args) {
 
-	private static void write(String args) {
+        return JOptionPane.showInputDialog(args);
 
-		JOptionPane.showMessageDialog(null, args);
+    }
 
-	}
+    private static String formatNumber(double number) {
 
-	private static String enter(String args) {
+        NumberFormat formater = NumberFormat.getInstance(Locale.of("pt", "BR"));
+        return formater.format(number);
 
-		return JOptionPane.showInputDialog(args);
+    }
 
-	}
+    private static String formatMoney(double number) {
 
-	private static int errorInt(String message) {
+        NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        return formatador.format(number);
 
-		while (true) {
-			try {
+    }
 
-				String answer = enter(message);
+    private static String errorString(String message) {
 
-				if (answer == null) {
+        while (true) {
 
-					write("Programa encerrado!");
-					return -1;
-				}
+            String answer = enter(message);
+            if (answer == null) {
 
-				int value = Integer.parseInt(answer);
+                write("Programa encerrado!!");
+                return null;
+            }
 
-				if (value > 0) {
+            if (!answer.isBlank()) {
 
-					return value;
-				}
+                return answer;
+            }
 
-				write("Por favor digite um número maior que 0");
+            write("Por favor digite algo para ser analisado!!");
+        }
+    }
 
-			} catch (NumberFormatException e) {
+    private static int errorInt(String message) {
 
-				write("Digite algo válido no espaço destinado!!");
-			}
-		}
-	}
+        while (true) {
+            try {
+
+                String answer = enter(message);
+                if (answer == null) {
+
+                    write("Programa encerrado!");
+                    return -1;
+                }
+
+                int value = Integer.parseInt(answer);
+
+                if (value > 0) {
+
+                    return value;
+                }
+
+                write("Por favor digite um número maior que 0");
+            } catch (NumberFormatException e) {
+
+                write("Digite algo válido no espaço destinado!!");
+            }
+        }
+    }
 }

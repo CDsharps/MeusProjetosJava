@@ -1,11 +1,31 @@
-import java.text.NumberFormat;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 
 public class caixaTexto {
 
 	public static void main(String[] args) {
+		StringBuilder capsLock = new StringBuilder();
 
+		String phrase = errorString("Digite a frase/palavra a ser convertida");
+		if (phrase == null) {
+
+			return;
+		}
+
+		for (int i = 0; i < phrase.length(); i++) {
+
+			char letter = phrase.charAt(i);
+			int plus = 'A' - 'a';
+			if (letter>='a' && letter<='z'){
+
+				char finalLetter = (char) (letter + plus);
+				capsLock.append(finalLetter);
+			} else {
+
+				capsLock.append(letter);
+			}
+		}
+
+		write("Conversão para maiúscula: " + capsLock);
 	}
 
 	private static void write(String args) {
@@ -17,20 +37,6 @@ public class caixaTexto {
 	private static String enter(String args) {
 
 		return JOptionPane.showInputDialog(args);
-
-	}
-
-	private static String formatNumber(long number) {
-
-		NumberFormat formater = NumberFormat.getInstance(Locale.of("pt", "BR"));
-		return formater.format(number);
-
-	}
-
-	private static String formatMoney(double number) {
-
-		NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
-		return formatador.format(number);
 
 	}
 
@@ -51,33 +57,6 @@ public class caixaTexto {
 			}
 
 			write("Por favor digite algo para ser analisado!!");
-		}
-	}
-
-	private static int errorInt(String message) {
-
-		while (true) {
-			try {
-
-				String answer = enter(message);
-				if (answer == null) {
-
-					write("Programa encerrado!");
-					return -1;
-				}
-
-				int value = Integer.parseInt(answer);
-
-				if (value > 0) {
-
-					return value;
-				}
-
-				write("Por favor digite um número maior que 0");
-			} catch (NumberFormatException e) {
-
-				write("Digite algo válido no espaço destinado!!");
-			}
 		}
 	}
 }
