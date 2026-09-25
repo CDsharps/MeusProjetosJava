@@ -123,6 +123,8 @@ public class métodos {
                     write("Obrigado pela preferência!");
                     break;
 
+                default:
+                    write("Digite uma opção válida!");
             }
         } while (option != 6);
     }
