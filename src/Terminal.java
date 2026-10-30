@@ -7,37 +7,96 @@ public class Terminal {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        double Nsal;
 
-        String name = errorString("Qual o nome do funcionário?\n");
-        skipLine(1);
+    }
 
-        double sal = Double.parseDouble(errorString("Qual o salário do funcionário?\nR$ "));
-        skipLine(1);
+    private static String printMatrix(int[][] matrix) {
 
-        int dep = errorInt("Quantos dependentes o funcionário possui?\n");
-        skipLine(1);
+        StringBuilder text = new StringBuilder();
 
-        switch (dep) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
 
-            case '0':
-                Nsal = sal + (sal * 5 / 100);
-                break;
+                text.append("[").append(matrix[i][j]).append("] ");
+            }
 
-            case '1', '2', '3':
-                Nsal = sal + (sal * 10 / 100);
-                break;
-
-            case '4', '5', '6':
-                Nsal = sal + (sal * 15 / 100);
-                break;
-
-            default:
-                Nsal = sal + (sal * 18 / 100);
-                break;
+            text.append("\n");
         }
 
-        write("O novo salário de " + name + " é de " + formatMoney(Nsal));
+        return text.toString();
+
+    }
+
+    private static boolean fillMatrix(int[][] matrix, int lines, int columns, String message) {
+
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < columns; j++) {
+
+                matrix[i][j] = errorInt(message + "[" + (i + 1) + "][" + (j + 1) + "]:");
+                if (matrix[i][j] == Integer.MIN_VALUE) {
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    private static int[][] constructMatrix(String letter) {
+
+        int[] parts = errorProportion("Digite a proporção da matriz " + letter + "(?x?): ");
+        if (parts == null) {
+
+            return null;
+        }
+
+        int lines = parts[0];
+        int columns = parts[1];
+
+        int[][] matrix = new int[lines][columns];
+        if (!fillMatrix(matrix, lines, columns, "Digite o número da posíção ")) {
+
+            return null;
+        }
+
+        return matrix;
+    }
+
+    private static int[] errorProportion(String message) {
+
+        while (true) {
+
+            String proportion = errorString(message);
+            if (proportion == null) {
+
+                return null;
+            }
+
+            String[] parts = proportion.toLowerCase().split("x");
+            if (parts.length != 2) {
+
+                write("Formato inválido. Digite no formato ?x?");
+                continue;
+            }
+
+            try {
+
+                int lines = Integer.parseInt(parts[0]);
+                int columns = Integer.parseInt(parts[1]);
+
+                if (lines > 0 && columns > 0) {
+
+                    return new int[] { lines, columns };
+                }
+
+                write("A proporção da matriz deve ser maior que zero!");
+            } catch (NumberFormatException e) {
+
+                write("Formato Inválido. Digite no formato ?x?");
+            }
+        }
     }
 
     private static void write(String args) {
@@ -67,7 +126,7 @@ public class Terminal {
 
     }
 
-    private static String formatMoney(double number){
+    private static String formatMoney(double number) {
 
         NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         return formatador.format(number);

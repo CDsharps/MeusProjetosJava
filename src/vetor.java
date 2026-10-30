@@ -2,10 +2,11 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 
-public class caixaTexto2 {
+public class vetor {
 
     public static void main(String[] args) {
 
+            
     }
 
     private static void fillVetor(String[] vetor, String message) {
