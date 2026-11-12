@@ -4,8 +4,9 @@ import java.util.List;
 import excessoes.MusicaJaCadastradaException;
 import modelo.Musica;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Repertorio {
+public class Repertorio implements Serializable {
 
     private List<Musica> musicas = new ArrayList<>();
 
