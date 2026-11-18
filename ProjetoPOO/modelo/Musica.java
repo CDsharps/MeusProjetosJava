@@ -9,17 +9,20 @@ public class Musica {
     private String artista;
     private String tom;
     private int bpm;
+    private String urlCifra;
 
     private static final String[] TONS_VALIDOS = { "C", "D", "E", "F", "G", "A", "B", "C#", "D#", "F#", "G#", "A#",
             "Db", "Eb", "Gb", "Ab", "Bb", "Cm", "Dm", "Em", "Fm", "Gm", "Am", "Bm", "C#m", "D#m", "F#m", "G#m", "A#m",
             "Dbm", "Ebm", "Gbm", "Abm", "Bbm" };
 
-    public Musica(String nome, String artista, String tom, int bpm) throws TomInvalidoException, BpmInvalidoException {
+    public Musica(String nome, String artista, String tom, int bpm, String urlCifra)
+            throws TomInvalidoException, BpmInvalidoException {
 
         setNome(nome);
         setArtista(artista);
         setTom(tom);
         setBpm(bpm);
+        setUrlCifra(urlCifra);
     }
 
     public String getNome() {
@@ -96,5 +99,25 @@ public class Musica {
         }
 
         this.bpm = bpm;
+    }
+
+    public String getUrlCifra() {
+
+        return urlCifra;
+    }
+
+    public void setUrlCifra(String urlCifra) {
+
+        if (urlCifra == null || urlCifra.isBlank()) {
+
+            throw new IllegalArgumentException("O link da cifra não pode ser vazio.");
+        }
+
+        if (!urlCifra.startsWith("https://") && !urlCifra.startsWith("http://")) {
+
+            throw new IllegalArgumentException("Link Inválido, deve iniciar com \"https://\" ou \"http://\".");
+        }
+
+        this.urlCifra = urlCifra;
     }
 }
